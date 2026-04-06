@@ -88,5 +88,5 @@ Body: ${issue.body}
 });
 
 app.listen(5000, () => {
-  console.log('✅ Server chal raha hai: http://localhost:5000/analyze');
+  console.log('✅ Server chal raha hai: https://github-issue-analyzer-6obx.onrender.com/analyze');
 });
