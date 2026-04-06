@@ -15,8 +15,8 @@ const openai = new OpenAI({
 async function fetchIssue(url) {
   const parts = url.trim().split('/');
   const owner = parts[3];
-  const repo = parts[4];
-  const num = parts[6];
+  const repo  = parts[4];
+  const num   = parts[6];
 
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/issues/${num}`,
@@ -33,6 +33,11 @@ async function fetchIssue(url) {
 app.post('/analyze', async (req, res) => {
   try {
     const { url } = req.body;
+
+    if (!url) {
+      return res.status(400).json({ error: 'URL daalo' });
+    }
+
     const issue = await fetchIssue(url);
 
     if (issue.message) {
@@ -40,7 +45,7 @@ app.post('/analyze', async (req, res) => {
     }
 
     const prompt = `
-Analyze this GitHub issue and return ONLY JSON:
+Analyze this GitHub issue and return ONLY JSON no extra text:
 
 Title: ${issue.title}
 Body: ${issue.body}
@@ -69,16 +74,19 @@ Body: ${issue.body}
     const analysis = JSON.parse(clean);
 
     res.json({
-      title: issue.title,
-      author: issue.user.login,
-      state: issue.state,
+      title:    issue.title,
+      author:   issue.user.login,
+      state:    issue.state,
       issueUrl: issue.html_url,
       analysis
     });
 
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(5000, () => console.log('Running on 5000'));
+app.listen(5000, () => {
+  console.log('✅ Server chal raha hai: http://localhost:5000');
+});
