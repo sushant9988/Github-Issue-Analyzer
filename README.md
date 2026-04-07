@@ -24,7 +24,7 @@ PORT=5000
 node server.js
 
 
-Live Demo - [githubanalyzer1.netlify.app](https://githubanalyzer1.netlify.app/)
+Live Demo - [[githubanalyzer1.netlify.app](https://githubanalyzer1.netlify.app/)](https://githubanalyzer12.netlify.app/)
 
 
 
